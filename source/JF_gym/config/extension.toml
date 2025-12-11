@@ -13,6 +13,7 @@ maintainer = "Isaac Lab Project Developers"
 description="Extension Template for Isaac Lab"
 repository = "https://github.com/isaac-sim/IsaacLab.git"
 keywords = ["extension", "template", "isaaclab"]
+license = "BSD-3-Clause"
 
 [dependencies]
 "isaaclab" = {}

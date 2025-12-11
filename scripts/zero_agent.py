@@ -1,3 +1,8 @@
+# # Copyright (c) 2025, Master Jia
+# # All rights reserved.
+# #
+# # SPDX-License-Identifier: BSD-3-Clause
+
 # Copyright (c) 2022-2025, The Isaac Lab Project Developers (https://github.com/isaac-sim/IsaacLab/blob/main/CONTRIBUTORS.md).
 # All rights reserved.
 #
@@ -30,12 +35,10 @@ simulation_app = app_launcher.app
 """Rest everything follows."""
 
 import gymnasium as gym
-import torch
-
 import isaaclab_tasks  # noqa: F401
-from isaaclab_tasks.utils import parse_env_cfg
-
 import JF_gym.tasks  # noqa: F401
+import torch
+from isaaclab_tasks.utils import parse_env_cfg  # type: ignore
 
 
 def main():
