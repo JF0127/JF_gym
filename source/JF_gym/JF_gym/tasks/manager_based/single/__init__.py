@@ -18,7 +18,7 @@ from . import agents
 
 
 gym.register(
-    id="Template-Jf-Gym-v0",
+    id="JF-Gym-left_arm_pitch_higher",
     entry_point="isaaclab.envs:ManagerBasedRLEnv",
     disable_env_checker=True,
     kwargs={
