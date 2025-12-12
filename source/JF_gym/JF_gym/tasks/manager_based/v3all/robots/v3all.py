@@ -58,32 +58,32 @@ V3ALLBOT_CONFIG = ArticulationCfg(
         pos=[0, 0, 1.0],
         joint_pos={
             # 左腿 (6)
-            "left_hip_pitch_joint": 0.0,  # [-1.5, 1]
-            "left_hip_roll_joint": 0.0,  # [-0.4, 1]
-            "left_hip_yaw_joint": 0.0,  # [-1.5, 1.5]
-            "left_knee_joint": 0.0,  # [0, 1.5]
-            "left_ankle_pitch_joint": 0.0,  # [-1.5, 1.5]
-            "left_ankle_roll_joint": 0.0,  # [-0.5, 0.5]
+            "left_hip_pitch_joint": -0.2,
+            "left_hip_roll_joint": 0.0,
+            "left_hip_yaw_joint": 0.0,
+            "left_knee_joint": -0.5,
+            "left_ankle_pitch_joint": 0.2,
+            "left_ankle_roll_joint": 0.0,
             # 右腿 (6)
-            "right_hip_pitch_joint": 0.0,  # [-1, 1.5]
-            "right_hip_roll_joint": 0.0,  # [-1, 0.4]
-            "right_hip_yaw_joint": 0.0,  # [-1.5, 1.5]
-            "right_knee_joint": 0.0,  # [-1.5, 0]
-            "right_ankle_pitch_joint": 0.0,  # [-1.5, 1.5]
-            "right_ankle_roll_joint": 0.0,  # [-0.5, 0.5]
+            "right_hip_pitch_joint": 0.2,
+            "right_hip_roll_joint": 0.0,
+            "right_hip_yaw_joint": 0.0,
+            "right_knee_joint": 0.5,
+            "right_ankle_pitch_joint": -0.2,
+            "right_ankle_roll_joint": 0.0,
             # 躯干 (2)
-            "waist_joint": 0.0,  # [-0.5, 0.5]
-            "head_joint": 0.0,  # [-1, 1]
+            "waist_joint": 0.0,
+            "head_joint": 0.0,
             # 左臂 (4)
-            "left_arm_pitch_higher_joint": 0.0,  # [-1.5, 1]
-            "left_arm_roll_joint": 0.0,  # [-0.4, 1.5]
-            "left_arm_yaw_joint": 0.0,  # [-1, 1]
-            "left_arm_pitch_lower_joint": 0.0,  # [-1.5, 0]
+            "left_arm_pitch_higher_joint": 0.0,
+            "left_arm_roll_joint": 0.0,
+            "left_arm_yaw_joint": 0.0,
+            "left_arm_pitch_lower_joint": 0.0,
             # 右臂 (4)
-            "right_arm_pitch_higher_joint": 0.0,  # [-1, 1.5]
-            "right_arm_roll_joint": 0.0,  # [-1.5, 0.4]
-            "right_arm_yaw_joint": 0.0,  # [-1, 1]
-            "right_arm_pitch_lower_joint": 0.0,  # [0, 1.5]
+            "right_arm_pitch_higher_joint": 0.0,
+            "right_arm_roll_joint": 0.0,
+            "right_arm_yaw_joint": 0.0,
+            "right_arm_pitch_lower_joint": 0.0,
         },
     ),
     actuators={

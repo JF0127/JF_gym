@@ -1,0 +1,101 @@
+# # Copyright (c) 2025, Master Jia
+# # All rights reserved.
+# #
+# # SPDX-License-Identifier: BSD-3-Clause
+
+seed: 42
+
+# ------------------------------------------------------------------------
+# 1. 神经网络模型 (Models) - 必须大幅增强
+# ------------------------------------------------------------------------
+models:
+  separate: False
+  policy:  # 策略网络 (Actor)
+    class: GaussianMixin
+    clip_actions: False
+    clip_log_std: True
+    min_log_std: -20.0
+    max_log_std: 2.0
+    initial_log_std: 0.0  # 初始探索噪声 (std = 1.0)
+    network:
+      - name: net
+        input: OBSERVATIONS
+        # [修改] 关键！从小网络 [32, 32] 改为大网络
+        # Humanoid 标准架构：512 -> 256 -> 128
+        layers: [512, 256, 128]
+        activations: elu
+    output: ACTIONS
+  value:  # 价值网络 (Critic)
+    class: DeterministicMixin
+    clip_actions: False
+    network:
+      - name: net
+        input: OBSERVATIONS
+        # [修改] Critic 网络也要同步变大
+        layers: [512, 256, 128]
+        activations: elu
+    output: ONE
+
+# ------------------------------------------------------------------------
+# 2. 记忆回放 (Memory)
+# ------------------------------------------------------------------------
+memory:
+  class: RandomMemory
+  memory_size: -1
+
+# ------------------------------------------------------------------------
+# 3. PPO Agent 超参数 (Agent) - 针对行走任务微调
+# ------------------------------------------------------------------------
+agent:
+  class: PPO
+  rollouts: 24                  # [建议] 16~32 均可。对于 4096 环境，24 是个平衡点
+  learning_epochs: 5            # [修改] 8次可能容易过拟合，5次是常用经验值
+  mini_batches: 4               # [修改] 4096环境数据量大，分4个batch比较稳
+  discount_factor: 0.99
+  lambda: 0.95
+
+  # [修改] 学习率。5e-4 有点大，容易震荡。
+  # 3e-4 是 Adam 优化器的"黄金学习率"，更适合复杂的动力学任务。
+  learning_rate: 3.0e-04
+
+  learning_rate_scheduler: KLAdaptiveLR
+  learning_rate_scheduler_kwargs:
+    kl_threshold: 0.008
+
+  state_preprocessor: RunningStandardScaler
+  state_preprocessor_kwargs: null
+  value_preprocessor: RunningStandardScaler
+  value_preprocessor_kwargs: null
+
+  random_timesteps: 0
+  learning_starts: 0
+  grad_norm_clip: 1.0
+  ratio_clip: 0.2
+  value_clip: 0.2
+  clip_predicted_values: True
+
+  # [修改] 熵系数。0.0 会导致过早收敛（不再尝试新动作）。
+  # 给一点点熵奖励 (0.01) 鼓励它多尝试不同的走法。
+  entropy_loss_scale: 0.01
+
+  value_loss_scale: 1.0         # [修改] 通常设为 1.0 或 0.5
+  kl_threshold: 0.0
+  rewards_shaper_scale: 1.0     # [修改] 建议设为 1.0，直接用你精心设计的 Reward 函数值
+  time_limit_bootstrap: False
+
+  # 日志和模型保存路径
+  experiment:
+    directory: "v3all_locomotion"  # [修改] 别再叫 cartpole 了，改成你的任务名
+    experiment_name: ""
+    write_interval: auto
+    checkpoint_interval: auto
+
+# ------------------------------------------------------------------------
+# 4. 训练器 (Trainer)
+# ------------------------------------------------------------------------
+trainer:
+  class: SequentialTrainer
+  # [修改] 必须加零！
+  # 4800 步连腿都抬不起来。改为 1亿 (100M) 或至少 2千万 (20M) 看效果。
+  timesteps: 2000000
+  environment_info: log

@@ -18,11 +18,11 @@ from . import agents
 
 
 gym.register(
-    id="JF-Gym-left_arm_pitch_higher",
+    id="JF-Gym",
     entry_point="isaaclab.envs:ManagerBasedRLEnv",
     disable_env_checker=True,
     kwargs={
-        "env_cfg_entry_point": f"{__name__}.jf_gym_env_cfg:JfGymEnvCfg",
+        "env_cfg_entry_point": f"{__name__}.v3all_cfg:JfGymEnvCfg",
         "skrl_cfg_entry_point": f"{agents.__name__}:skrl_ppo_cfg.yaml",
     },
 )
